@@ -64,7 +64,7 @@
 
 ## 交流群
 
--   QQ 群 1: [565110729](https://qun.qq.com/universal-share/share?ac=1&authKey=1j6zabDKsXrog1WcVoGIr9%2FIbtMQnjNrpbWnmasbBE4Im3%2BCYMJZBYrjgpHPox1M&busi_data=eyJncm91cENvZGUiOiI1NjUxMTA3MjkiLCJ0b2tlbiI6IllHUXFjanloR09PU20rZkovdThqY0h1NlBXZU5hbkpJYmJIMWo0VWhxYWpJNlNuajVWaFc0dmVJVWZxZFQ1c1UiLCJ1aW4iOiI3MzA3MTY3NDUifQ%3D%3D&data=xFt81TIm-kUTn62OdYAbyUFFvxG1ytsXxvSdYswTl7r9N-POgxro0d6Am5QZDVvzGx2ujf83lBDdPQGtw2lQKw&svctype=4&tempid=h5_group_info)
+-   QQ 群: [1004564126](https://qm.qq.com/q/LsQM5D27qm)
 -   想要为汉化添砖加瓦或者反馈翻译问题的加这个群：[995382836](https://qm.qq.com/q/Crd9RzMQcS)（不是游戏玩法交流群）
 
 如有问题，请在群内反馈或者此仓库提交 Issues
