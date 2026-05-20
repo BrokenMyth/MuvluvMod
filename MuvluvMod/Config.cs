@@ -15,6 +15,7 @@ public static class Config
     public static MelonPreferences_Entry<bool> EnableSkipButton;
     public static MelonPreferences_Entry<bool> VoiceInterruption;
     public static MelonPreferences_Entry<bool> AutoSkipBattle;
+    public static MelonPreferences_Entry<bool> DisableWhiteFlash;
 
     public static MelonPreferences_Entry<bool> Translation;
     public static MelonPreferences_Entry<string> TranslationCDN;
@@ -32,6 +33,7 @@ public static class Config
         EnableSkipButton = GeneralCategory.CreateEntry("EnableSkipButton", false, "是否总是开启跳过按钮");
         VoiceInterruption = GeneralCategory.CreateEntry("VoiceInterruption", true, "剧情中播放下一句话时是否中断当前语音");
         AutoSkipBattle = GeneralCategory.CreateEntry("AutoSkipBattle", false, "自动跳过战斗（自动按跳过键，不受跳过键开关影响）");
+        DisableWhiteFlash = GeneralCategory.CreateEntry("DisableWhiteFlash", false, "禁用剧本演出中的白屏闪烁效果");
 
         Translation = TranslationCategory.CreateEntry("Enable", true, "是否开启汉化");
         TranslationCDN = TranslationCategory.CreateEntry("CdnURL", "https://raw.githubusercontent.com/anosu/muvluvgg-translation/refs/heads/main", "翻译加载的CDN");
@@ -58,6 +60,10 @@ public static class Config
         AutoSkipBattle.OnEntryValueChanged.Subscribe((oldValue, newValue) =>
         {
             Core.Log.Msg($"[General] AutoSkipBattle => {newValue}");
+        });
+        DisableWhiteFlash.OnEntryValueChanged.Subscribe((oldValue, newValue) =>
+        {
+            Core.Log.Msg($"[General] DisableWhiteFlash => {newValue}");
         });
         Translation.OnEntryValueChanged.Subscribe((oldValue, newValue) =>
         {

@@ -12,6 +12,7 @@ using Il2CppAssets.GameUi.Scenario.Choice;
 using Il2CppAssets.GameUi.Scenario.History;
 using Il2CppAssets.GameUi.Scenario.Text;
 using Il2CppAssets.GameUi.Service;
+using Il2CppAssets.VisualEffectData;
 using Il2CppAssets.VisualEffectData.VisualEffects;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using Il2CppTMPro;
@@ -274,6 +275,21 @@ public class Patch
         {
             RestoreFontAsset(__instance.text);
         }
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.VFX_EVENT_LightFlash))]
+    public static bool DisableWhiteFlash()
+    {
+        return !Config.DisableWhiteFlash.Value;
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.VFX_EVENT_DarkFlash))]
+    public static bool DisableDarkFlash()
+    {
+        // return !Config.DisableWhiteFlash.Value;
+        return true;
     }
 
     public static void RestoreFontAsset(TMP_Text text, bool restoreMaterial = false, float? lineSpacing = null)
