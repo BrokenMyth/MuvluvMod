@@ -12,6 +12,7 @@
     <Version>1.0.5</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
     <RootNamespace>MuvluvMod</RootNamespace>
     <OutputPath>$(GameDir)\Mods\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

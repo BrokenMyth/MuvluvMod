@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Nodes;
 using HarmonyLib;
@@ -103,7 +104,29 @@ public class Patch
     [HarmonyPatch(typeof(ScenarioController), nameof(ScenarioController.GenerateFrames))]
     public static void ReplaceTranslation(Il2CppReferenceArray<SceneFrameMaster> masters)
     {
-        if (!Config.Translation.Value || !Translation.IsTranslated) return;
+        if (!Config.Translation.Value) return;
+
+        if (!Translation.IsTranslated)
+        {
+            var pending = new Dictionary<string, string>();
+            foreach (var frame in masters)
+            {
+                if (string.IsNullOrEmpty(frame.ConfigurationJson)) continue;
+                var config = JsonNode.Parse(frame.ConfigurationJson);
+                if (config?["Phrase"] is JsonObject phrase)
+                {
+                    if (phrase.TryGetPropertyValue("Text", out var textNode))
+                    {
+                        string text = textNode.ToString();
+                        if (!string.IsNullOrEmpty(text) && !pending.ContainsKey(text))
+                            pending[text] = "";
+                    }
+                }
+            }
+            if (pending.Count > 0)
+                Translation.SavePendingSceneTranslation(sceneId, pending);
+            return;
+        }
 
         try
         {
