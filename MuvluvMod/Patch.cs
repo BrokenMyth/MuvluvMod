@@ -68,9 +68,15 @@ public class Patch
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(ScenarioController), nameof(ScenarioController.Refresh), [])]
-    public static void SetIsPlayingScenario()
+    public static void SetIsPlayingScenario(ScenarioController __instance)
     {
         isPlayingScenario = true;
+
+        if (Config.DisableWhiteFlash.Value)
+        {
+            foreach (var vfx in UnityEngine.Object.FindObjectsOfType<VfxHandler>(true))
+                vfx.enabled = false;
+        }
     }
 
     [HarmonyPrefix]
@@ -181,6 +187,7 @@ public class Patch
     public static void ReplaceTitleFont(ScenarioAnimationComponent __instance)
     {
         var parent = __instance.gameObject.transform.Find("ScreenAnimationParent");
+
         parent.OnTransformChildrenChangedAsObservable().Subscribe((System.Action<Unit>)(_ =>
         {
             Transform title = Enumerable.Range(0, parent.childCount)
@@ -308,10 +315,47 @@ public class Patch
     }
 
     [HarmonyPrefix]
+    [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.VFX_EVENT_LightFlash), typeof(string))]
+    public static bool DisableWhiteFlashInternal(string data)
+    {
+        return !Config.DisableWhiteFlash.Value;
+    }
+
+    [HarmonyPrefix]
     [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.VFX_EVENT_DarkFlash))]
     public static bool DisableDarkFlash()
     {
-        // return !Config.DisableWhiteFlash.Value;
+        return !Config.DisableWhiteFlash.Value;
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.VFX_EVENT_DarkFlash), typeof(string))]
+    public static bool DisableDarkFlashInternal(string data)
+    {
+        return !Config.DisableWhiteFlash.Value;
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.OnEnable))]
+    public static void DisableVfxOnEnable(VfxHandler __instance)
+    {
+        if (Config.DisableWhiteFlash.Value)
+            __instance.enabled = false;
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(CanvasGroup), "set_alpha")]
+    public static bool BlockFadeImageAlpha(CanvasGroup __instance, ref float value)
+    {
+        if (!Config.DisableWhiteFlash.Value || !isPlayingScenario)
+            return true;
+
+        var go = __instance.gameObject;
+        if (go != null && go.name.IndexOf("Fade", StringComparison.OrdinalIgnoreCase) >= 0 && value > 0.01f)
+        {
+            Core.Log.Warning($"Blocked CanvasGroup.alpha on {go.name}: {value:F2} -> 0.01");
+            value = 0.01f;
+        }
         return true;
     }
 

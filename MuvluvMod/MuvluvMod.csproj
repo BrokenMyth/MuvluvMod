@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <GameDir>c:\app\gamemod\Muv\muv_luv_girlsgarden_cl</GameDir>
+    <GameDir>F:\muv\muv_luv_girlsgardenx_cl</GameDir>
     <Authors>Jitsu</Authors>
   </PropertyGroup>
 
