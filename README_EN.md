@@ -1,5 +1,7 @@
 This repository provides files for the **Windows DMM Game Player version** of the game.
 
+> **⚠️ Migrated from BepInEx to MelonLoader**, so users no longer need to download Unity patches from BepInEx's official website during installation.
+
 ---
 
 ## Features
@@ -27,23 +29,22 @@ This repository provides files for the **Windows DMM Game Player version** of th
 
 ### 3. Installation
 
--   Extract the archive; you will get `winhttp.dll`, `BepInEx`, and other files.
+-   Extract the archive; you will get `version.dll`, `MelonLoader`, `Mods`, and other files.
 -   Copy all files to the same folder as `muv_luv_girlsgardenx_cl.exe`.
 -   If an older version exists, delete or overwrite it.
 
 ### 4. Launching
 
--   On the first run (or after a game update), a console window will appear for initialization.
--   BepInEx will download the proper Unity patch from its official website.
+-   On the first run, MelonLoader will automatically generate the necessary IL2CPP interop assemblies and config files.
 -   After initialization, the game will start normally.
 
 ### 5. Configuration
 
--   After the first run, two config files will be created under `BepInEx\config`:
-    -   `BepInEx.cfg` (general settings)
+-   After the first run, config files will be created under `UserData`:
+    -   `Loader.cfg` (MelonLoader settings)
     -   `MuvluvMod.cfg` (mod settings, e.g. disable translation)
 -   Restart the game after editing configs.
--   To hide the console window, set `Enabled = false` under `[Logging.Console]` in `BepInEx.cfg`.
+-   To hide the console window, set `hide_console = true` under `[console]` in `UserData\Loader.cfg`.
 
 ---
 

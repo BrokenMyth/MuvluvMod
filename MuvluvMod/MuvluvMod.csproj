@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <GameDir>E:\Games\DMM GAMES\muv_luv_girlsgardenx_cl</GameDir>
+    <GameDir>c:\app\gamemod\Muv\muv_luv_girlsgarden_cl</GameDir>
     <Authors>Jitsu</Authors>
   </PropertyGroup>
 
@@ -12,14 +12,10 @@
     <Version>1.0.5</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
-    <RestoreAdditionalProjectSources>
-      https://api.nuget.org/v3/index.json;
-      https://nuget.bepinex.dev/v3/index.json;
-      https://nuget.samboy.dev/v3/index.json
-    </RestoreAdditionalProjectSources>
     <RootNamespace>MuvluvMod</RootNamespace>
-    <BaseOutputPath>$(GameDir)\BepInEx\plugins</BaseOutputPath>
-    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <OutputPath>$(GameDir)\Mods\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -31,15 +27,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <GameDlls Include="$(GameDir)\BepInEx\interop\*.dll">
-    </GameDlls>
-    <Reference Include="@(GameDlls)">
+    <Reference Include="MelonLoader">
+      <HintPath>$(GameDir)\MelonLoader\net6\MelonLoader.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(GameDir)\MelonLoader\net6\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>$(GameDir)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.Common">
+      <HintPath>$(GameDir)\MelonLoader\net6\Il2CppInterop.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.HarmonySupport">
+      <HintPath>$(GameDir)\MelonLoader\net6\Il2CppInterop.HarmonySupport.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+    <GameDlls Include="$(GameDir)\MelonLoader\Il2CppAssemblies\*.dll" />
+    <Reference Include="@(GameDlls)">
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
+
 </Project>
