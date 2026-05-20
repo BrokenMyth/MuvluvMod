@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Il2CppInterop.Runtime.InteropTypes;
@@ -261,7 +264,10 @@ public class Translation
             var obj = new JsonObject();
             foreach (var kv in filtered)
                 obj[kv.Key] = kv.Value;
-            File.WriteAllText(pendingPath, obj.ToJsonString(), System.Text.Encoding.UTF8);
+            File.WriteAllText(pendingPath, obj.ToJsonString(new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            }), System.Text.Encoding.UTF8);
             Core.Log.Msg($"Pending translation saved: {pendingPath} ({filtered.Count} entries)");
         }
         catch (System.Exception ex)
