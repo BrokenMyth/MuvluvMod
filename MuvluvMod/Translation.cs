@@ -1,4 +1,4 @@
-﻿﻿﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -264,10 +264,12 @@ public class Translation
             var obj = new JsonObject();
             foreach (var kv in filtered)
                 obj[kv.Key] = kv.Value;
-            File.WriteAllText(pendingPath, obj.ToJsonString(new JsonSerializerOptions
+            var json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
             {
+                WriteIndented = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            }), System.Text.Encoding.UTF8);
+            });
+            File.WriteAllText(pendingPath, json, new UTF8Encoding(false));
             Core.Log.Msg($"Pending translation saved: {pendingPath} ({filtered.Count} entries)");
         }
         catch (System.Exception ex)
