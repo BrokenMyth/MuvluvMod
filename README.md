@@ -20,6 +20,7 @@
 -   **剧情语音不中断**：播放下一句台词时不中断当前语音
 -   **自动跳过战斗**：自动点击跳过按钮跳过战斗场景
 -   **禁用白屏闪光**：禁用剧本演出中的白屏/黑屏闪烁效果（LightFlash / DarkFlash）
+-   **剧情 Spine 调整**：剧情播放时可用快捷键调整 Spine 大小和位置，并自动保存到配置文件
 
 ---
 
@@ -53,6 +54,7 @@
     -   `Loader.cfg`（MelonLoader 加载器配置）
     -   `MuvluvMod.cfg`（插件配置，含 General 和 Translation 两个分类）
 -   修改配置后需重启游戏生效
+-   剧情 Spine 调整项位于 `[General]`：`SpineScale`、`SpineOffsetX`、`SpineOffsetY`、`SpineMoveSensitivity`、`SpineScaleSensitivity`、`SpineDebugLog`
 -   如需隐藏控制台窗口，请在 `UserData\Loader.cfg` 中将 `[console]` 下的 `hide_console` 设置为 `true`
 
 ### 6. 翻译数据
@@ -72,6 +74,9 @@
 -   `F3`：开启/关闭始终启用跳过按钮
 -   `F4`：开启/关闭语音中断（关闭后语音不会随台词切换而中断）
 -   `F5`：开启/关闭自动跳过战斗
+-   `F8`：在控制台打印当前剧情 Spine 目标物体路径
+-   `+` / `-`：剧情播放时放大/缩小当前剧情 Spine（主键盘 `+/-` 和小键盘 `+/-` 均可）
+-   `↑` / `↓` / `←` / `→`：剧情播放时移动当前剧情 Spine
 
 ---
 

@@ -18,6 +18,7 @@ This repository provides files for the **Windows DMM Game Player version** of th
 -   **Voice interruption prevention**: Prevents the current voice line from being interrupted when the next line plays
 -   **Auto-skip battles**: Automatically clicks the skip button to skip battle scenes
 -   **Disable white flash**: Disables white/black screen flash effects (LightFlash / DarkFlash) during scenario performances
+-   **Scenario Spine adjustment**: Resize and move scenario Spine objects with hotkeys, persisted to the config file
 
 ---
 
@@ -52,6 +53,7 @@ This repository provides files for the **Windows DMM Game Player version** of th
     -   `Loader.cfg` (MelonLoader settings)
     -   `MuvluvMod.cfg` (mod settings, split into General and Translation categories)
 -   Restart the game after editing configs.
+-   Scenario Spine settings are under `[General]`: `SpineScale`, `SpineOffsetX`, `SpineOffsetY`, `SpineMoveSensitivity`, `SpineScaleSensitivity`, `SpineDebugLog`.
 -   To hide the console window, set `hide_console = true` under `[console]` in `UserData\Loader.cfg`.
 
 ### 6. Translation Data
@@ -71,6 +73,9 @@ When encountering untranslated scenarios for the first time, the mod automatical
 -   `F3`: Toggle always-enabled skip button
 -   `F4`: Toggle voice interruption (when disabled, voices are not interrupted by line changes)
 -   `F5`: Toggle auto battle skip
+-   `F8`: Print the current scenario Spine target object paths to the console
+-   `+` / `-`: Scale the current scenario Spine during scenario playback (main keyboard and numpad both work)
+-   `↑` / `↓` / `←` / `→`: Move the current scenario Spine during scenario playback
 
 ---
 

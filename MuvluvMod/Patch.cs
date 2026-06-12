@@ -13,6 +13,7 @@ using Il2CppAssets.GameUi.Scenario.Choice;
 using Il2CppAssets.GameUi.Scenario.History;
 using Il2CppAssets.GameUi.Scenario.Text;
 using Il2CppAssets.GameUi.Service;
+using Il2CppAssets.Utilities.Spine;
 using Il2CppAssets.VisualEffectData;
 using Il2CppAssets.VisualEffectData.VisualEffects;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
@@ -71,12 +72,6 @@ public class Patch
     public static void SetIsPlayingScenario(ScenarioController __instance)
     {
         isPlayingScenario = true;
-
-        if (Config.DisableWhiteFlash.Value)
-        {
-            foreach (var vfx in UnityEngine.Object.FindObjectsOfType<VfxHandler>(true))
-                vfx.enabled = false;
-        }
     }
 
     [HarmonyPrefix]
@@ -84,6 +79,7 @@ public class Patch
     public static void SetIsNotPlayingScenario()
     {
         isPlayingScenario = false;
+        SpineControl.ClearTrackedSpines();
     }
 
     [HarmonyPrefix]
@@ -186,6 +182,8 @@ public class Patch
     [HarmonyPatch(typeof(ScenarioAnimationComponent), nameof(ScenarioAnimationComponent.Initialize))]
     public static void ReplaceTitleFont(ScenarioAnimationComponent __instance)
     {
+        SpineControl.SetScenarioAnimationComponent(__instance);
+
         var parent = __instance.gameObject.transform.Find("ScreenAnimationParent");
 
         parent.OnTransformChildrenChangedAsObservable().Subscribe((System.Action<Unit>)(_ =>
@@ -335,14 +333,6 @@ public class Patch
         return !Config.DisableWhiteFlash.Value;
     }
 
-    [HarmonyPostfix]
-    [HarmonyPatch(typeof(VfxHandler), nameof(VfxHandler.OnEnable))]
-    public static void DisableVfxOnEnable(VfxHandler __instance)
-    {
-        if (Config.DisableWhiteFlash.Value)
-            __instance.enabled = false;
-    }
-
     [HarmonyPrefix]
     [HarmonyPatch(typeof(CanvasGroup), "set_alpha")]
     public static bool BlockFadeImageAlpha(CanvasGroup __instance, ref float value)
@@ -357,6 +347,27 @@ public class Patch
             value = 0.01f;
         }
         return true;
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(MecanimController), nameof(MecanimController.SetTrigger), typeof(MecanimController.Triggers), typeof(float))]
+    public static void TrackMecanimTrigger(MecanimController __instance, MecanimController.Triggers trigger)
+    {
+        SpineControl.TrackScenarioMecanimTrigger(__instance, trigger.ToString());
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(MecanimController), nameof(MecanimController.SetTriggerIfNotTriggered), typeof(MecanimController.Triggers), typeof(float))]
+    public static void TrackMecanimTriggerIfNotTriggered(MecanimController __instance, MecanimController.Triggers trigger)
+    {
+        SpineControl.TrackScenarioMecanimTrigger(__instance, trigger.ToString());
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(MecanimController), nameof(MecanimController.SetTrigger), typeof(string), typeof(float))]
+    public static void TrackMecanimTriggerName(MecanimController __instance, string triggerName)
+    {
+        SpineControl.TrackScenarioMecanimTrigger(__instance, triggerName);
     }
 
     public static void RestoreFontAsset(TMP_Text text, bool restoreMaterial = false, float? lineSpacing = null)

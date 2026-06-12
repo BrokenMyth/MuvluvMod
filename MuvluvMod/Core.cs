@@ -30,21 +30,39 @@ public class Core : MelonMod
 
     public override void OnUpdate()
     {
-        if (Keyboard.current.f2Key.wasPressedThisFrame)
+        var keyboard = Keyboard.current;
+        if (keyboard != null && keyboard.f2Key.wasPressedThisFrame)
         {
             Config.Translation.Value = !Config.Translation.Value;
         }
-        if (Keyboard.current.f3Key.wasPressedThisFrame)
+        if (keyboard != null && keyboard.f3Key.wasPressedThisFrame)
         {
             Config.EnableSkipButton.Value = !Config.EnableSkipButton.Value;
         }
-        if (Keyboard.current.f4Key.wasPressedThisFrame)
+        if (keyboard != null && keyboard.f4Key.wasPressedThisFrame)
         {
             Config.VoiceInterruption.Value = !Config.VoiceInterruption.Value;
         }
-        if (Keyboard.current.f5Key.wasPressedThisFrame)
+        if (keyboard != null && keyboard.f5Key.wasPressedThisFrame)
         {
             Config.AutoSkipBattle.Value = !Config.AutoSkipBattle.Value;
         }
+
+        SpineControl.OnUpdate();
+    }
+
+    public override void OnLateUpdate()
+    {
+        SpineControl.OnLateUpdate();
+    }
+
+    public override void OnApplicationQuit()
+    {
+        SpineControl.FlushConfig();
+    }
+
+    public override void OnDeinitializeMelon()
+    {
+        SpineControl.FlushConfig();
     }
 }
